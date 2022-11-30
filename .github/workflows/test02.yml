@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: slack
-      - uses: slackapi/slack-github-action@v1.23.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
           # The following message update step does not accept a channel name.
           # Setting a channel ID here for consistency is highly recommended.
@@ -58,5 +58,5 @@ jobs:
               }
             ]
           }
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP}}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP}}
