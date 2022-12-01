@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 1.8
+          distribution: "zulu"
           cache: gradle
       - name: Set Android SDK
         uses: android-actions/setup-android@v2
