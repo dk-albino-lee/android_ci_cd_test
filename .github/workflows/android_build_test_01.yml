@@ -45,7 +45,7 @@ jobs:
           update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
-              "text": "Status: DONE"
+              "text": "Status: DONE",
               "attachments": [
                 {
                   "pretext": "Test DONE",
