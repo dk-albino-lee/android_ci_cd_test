@@ -24,12 +24,12 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew --no-daemon build
-      - name: Gradle Build
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: --stacktrace -Dtrace :app:testDevDebugUnitTest :app:assembleDevDebug :app:assemblePreprodRelease
-        env:
-          TERM: dumb
+#      - name: Gradle Build
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: --stacktrace -Dtrace :app:testDevDebugUnitTest :app:assembleDevDebug :app:assemblePreprodRelease
+#        env:
+#          TERM: dumb
       - name: Unit Test
         run: ./gradlew test
       - name: Build debug APK
