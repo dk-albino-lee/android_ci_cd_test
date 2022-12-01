@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Greeting("World")
+                    TestDate(date = "20221201")
                 }
             }
         }
@@ -32,6 +33,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     Text(text = "Hello $name! First step for CI/CD!")
+}
+
+@Composable
+fun TestDate(date: String) {
+    Text(text = "Test Commit on $date")
 }
 
 @Preview(showBackground = true)
