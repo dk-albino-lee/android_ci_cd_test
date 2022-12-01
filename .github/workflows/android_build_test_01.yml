@@ -42,7 +42,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: "C04CXA6KPQW"
-#          update-ts: ${{ steps.slack.outputs.ts }}
+          update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
               "text": "Status: DONE",
@@ -60,5 +60,5 @@ jobs:
                 }
               ]
             }
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP }}
