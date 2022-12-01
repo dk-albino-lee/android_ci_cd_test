@@ -1,0 +1,59 @@
+name: Android Build Test
+
+on:
+  pull_request:
+    branches:
+      - '**'
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions.checkout@v2
+      - name: Set Up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 1.8
+          cache: gradle
+#      - name: Set Android SDK
+#        uses: android-actions/setup-android@v2
+      - name: Grand gradlew permission
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew --no-daemon build
+#      - name: Gradle Build
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: --stacktrace -Dtrace :app:testDevDebugUnitTest :app:assembleDevDebug :app:assemblePreprodRelease
+#        env:
+#          TERM: dumb
+      - name: Unit Test
+        run: ./gradlew test
+      - name: Build debug APK
+        run: bash ./gradlew assembleDebug --stacktrace
+      # AppTester 배포 루틴 추가 필요
+      # app/build/outputs/apk/dev/debug/app-dev-debug.apk
+      - name: Send Slack notification
+        if: always()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: "C04CXA6KPQW"
+          update-ts: ${{ steps.slack.outputs.ts }}
+          payload: |
+            {
+              "text": "Status: ${{ job.status }}"
+              "attachments": [
+                "pretext": "${{ job.status }}",
+                "color": "28a745",
+                "fields": [
+                  "title": "Status",
+                  "short": true,
+                  "value": ${{ job.status }}
+                ]
+              ]
+            }
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP}}
