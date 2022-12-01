@@ -2,9 +2,11 @@ name: Android Build Test
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - '**'
   push:
-    branches: [main]
+    branches:
+      - '**'
 
 jobs:
   build:
@@ -22,12 +24,12 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew --no-daemon build
-#      - name: Gradle Build
-#        uses: gradle/gradle-build-action@v2
-#        with:
-#          arguments: --stacktrace -Dtrace :app:testDevDebugUnitTest :app:assembleDevDebug :app:assemblePreprodRelease
-#        env:
-#          TERM: dumb
+      - name: Gradle Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: --stacktrace -Dtrace :app:testDevDebugUnitTest :app:assembleDevDebug :app:assemblePreprodRelease
+        env:
+          TERM: dumb
       - name: Unit Test
         run: ./gradlew test
       - name: Build debug APK
@@ -35,6 +37,7 @@ jobs:
       # AppTester 배포 루틴 추가 필요
       # app/build/outputs/apk/dev/debug/app-dev-debug.apk
       - name: Send Slack notification
+        id: slack
         if: always()
         uses: slackapi/slack-github-action@v1.23.0
         with:
@@ -44,14 +47,18 @@ jobs:
             {
               "text": "Status: DONE"
               "attachments": [
-                "pretext": "Test DONE",
-                "color": "28a745",
-                "fields": [
-                  "title": "Status",
-                  "short": true,
-                  "value": "DONE"
+                {
+                  "pretext": "Test DONE",
+                  "color": "28a745",
+                  "fields": [
+                    {
+                      "title": "Status",
+                      "short": true,
+                      "value": "DONE"
+                    }
+                  ]
                 ]
-              ]
+              }
             }
           env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP }}
