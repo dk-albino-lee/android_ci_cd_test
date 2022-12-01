@@ -18,8 +18,8 @@ jobs:
         with:
           java-version: 1.8
           cache: gradle
-#      - name: Set Android SDK
-#        uses: android-actions/setup-android@v2
+      - name: Set Android SDK
+        uses: android-actions/setup-android@v2
       - name: Grand gradlew permission
         run: chmod +x gradlew
       - name: Build with Gradle
@@ -44,16 +44,16 @@ jobs:
           update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
-              "text": "Status: ${{ job.status }}"
+              "text": "Status: DONE"
               "attachments": [
-                "pretext": "${{ job.status }}",
+                "pretext": "Test DONE",
                 "color": "28a745",
                 "fields": [
                   "title": "Status",
                   "short": true,
-                  "value": "${{ job.status }}"
+                  "value": "DONE"
                 ]
               ]
             }
           env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP}}
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP }}
