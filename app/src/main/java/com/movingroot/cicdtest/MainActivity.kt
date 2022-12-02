@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Greeting("World")
-                    TestDate(date = "20221202 midnight")
+                    TestDate(date = "20221202 night")
                 }
             }
         }
