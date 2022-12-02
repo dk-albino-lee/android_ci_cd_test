@@ -41,32 +41,26 @@ jobs:
       - name: Validate Gradlew
         id: validate_gradlew
         uses: gradle/wrapper-validation-action@v1
-        continue-on-error: true
 
       - name: Set Up Gradle
         id: setup_gradle
         uses: gradle/gradle-build-action@v2
-        continue-on-error: true
 
       - name: Build with Gradle
         id: build_with_gradle
         run: ./gradlew build
-        continue-on-error: true
 
       - name: Lint
         id: lint
         run: ./gradlew ktlintCheck
-        continue-on-error: true
 
       - name: Unit Test
         id: unit_test
         run: ./gradlew test --tests ExampleUnitTest
-        continue-on-error: true
 
       - name: Build debug APK
         id: build_debug_apk
         run: bash ./gradlew assembleDebug --stacktrace
-        continue-on-error: true
 
       # AppTester 배포 루틴 추가 필요
       # app/build/outputs/apk/dev/debug/app-dev-debug.apk
@@ -119,7 +113,6 @@ jobs:
         if: ${{ job.status }} != 'failure'
         run: |
           echo "LINE_COLOR=28a745" >> $GITHUB_ENV
-          echo "FAILED_STEP="ALL SUCCEEDED" >> $GITHUB_ENV
 
       - name: Send Slack notification
         id: slack
