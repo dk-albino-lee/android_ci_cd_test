@@ -60,7 +60,7 @@ jobs:
       # app/build/outputs/apk/dev/debug/app-dev-debug.apk
 
       - name: Set Notification Line Color Red
-        if: ${{ job.status }} == 'failure'
+        if: ${{ failure() }}
         run: |
           echo "LINE_COLOR=ff0800" >> $GITHUB_ENV
 
