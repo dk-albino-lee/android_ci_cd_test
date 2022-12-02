@@ -70,27 +70,27 @@ jobs:
 
       # CHECK ERROR
       - name: Check If Grand Gradlew Permission Failed
-        if: ${{ steps.grand_gradlew_permission.outcome }} != 'success'
+        if: ${{ failure() && steps.grand_gradlew_permission.outcome }} != 'success'
         run: |
           echo "FAILED_STEP=Grand Gradlew Permission" >> $GITHUB_ENV
 
       - name: Check If Validate Gradlew Failed
-        if: ${{ steps.validate_gradlew.outcome }} != 'success'
+        if: ${{ failure() && steps.validate_gradlew.outcome }} != 'success'
         run: |
           echo "FAILED_STEP=Validate Gradlew Permission" >> $GITHUB_ENV
 
       - name: Check If Set Up Gradle Failed
-        if: ${{ steps.setup_gradle.outcome }} != 'success'
+        if: ${{ failure() && steps.setup_gradle.outcome }} != 'success'
         run: |
           echo "FAILED_STEP=Set Up Gradle" >> $GITHUB_ENV
 
       - name: Check If Build with Gradle Failed
-        if: ${{ steps.build_with_gradle.outcome }} != 'success'
+        if: ${{ failure() && steps.build_with_gradle.outcome }} != 'success'
         run: |
           echo "FAILED_STEP=Build with Gradle" >> $GITHUB_ENV
 
       - name: Check If Lint Failed
-        if: ${{ steps.lint.outcome }}!= 'success'
+        if: ${{ failure() && steps.lint.outcome }}!= 'success'
         run: |
           echo "FAILED_STEP=Lint" >> $GITHUB_ENV 
 
