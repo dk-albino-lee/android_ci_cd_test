@@ -60,12 +60,18 @@ jobs:
       # app/build/outputs/apk/dev/debug/app-dev-debug.apk
 
       - name: Set Notification Line Color
-        id: color
-
+        id: set-color
+        if: always()
+        run: |
+          if [ ${{ failure() }} ]; then
+            ::set-output name=line_color::ff0000
+          else
+            ::set-output name=line_color::28a745
 
       - name: Send Slack notification
         id: slack
         if: always()
+        needs:
         uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: "C04CXA6KPQW"
@@ -76,7 +82,7 @@ jobs:
               "attachments": [
                 {
                   "pretext": "Test ${{ job.status }}",
-                  "color": "28a745",
+                  "color": "${{ steps.set-color.outputs.line_color }}",
                   "fields": [
                     {
                       "title": "Status",
