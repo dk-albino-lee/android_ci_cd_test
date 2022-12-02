@@ -23,16 +23,16 @@ jobs:
         uses: android-actions/setup-android@v2
       - name: Grand gradlew permission
         run: chmod +x gradlew
-#      - name: Build with Gradle
-#        run: ./gradlew --no-daemon build
-      - name: Gradle Build
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: --stacktrace -Dtrace :app:testDevDebugUnitTest :app:assembleDevDebug :app:assemblePreprodRelease
-        env:
-          TERM: dumb
+      - name: Build with Gradle
+        run: ./gradlew --no-daemon build
+#      - name: Gradle Build
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: --stacktrace -Dtrace :app:testDevDebugUnitTest :app:assembleDevDebug :app:assemblePreprodRelease
+#        env:
+#          TERM: dumb
       - name: Unit Test
-        run: ./gradlew test
+        run: ./gradlew test --tests ExampleUnitTest
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
       # AppTester 배포 루틴 추가 필요
