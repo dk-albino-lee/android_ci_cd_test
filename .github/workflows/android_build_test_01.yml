@@ -64,7 +64,7 @@ jobs:
         if: always()
         run: |
           if [ ${{ job.status }} == 'failure' ]; then
-            ::set-output name=line_color::ff0000
+            ::set-output name=line_color::ff0800
           else
             ::set-output name=line_color::28a745
 
@@ -84,7 +84,7 @@ jobs:
                   "color": "${{ steps.set-color.outputs.line_color }}",
                   "fields": [
                     {
-                      "title": "Status",
+                      "title": "Job has ${{ job.status }}.",
                       "short": true,
                       "value": "${{ github.job }} in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}."
                     }
