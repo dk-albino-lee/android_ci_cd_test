@@ -59,15 +59,15 @@ jobs:
       # AppTester 배포 루틴 추가 필요
       # app/build/outputs/apk/dev/debug/app-dev-debug.apk
 
-      - name: Set Notification Line Color
-        id: set-color
-        if: always()
+      - name: Set Notification Line Color Red
+        if: ${{ job.status }} == 'failure'
         run: |
-          if [ ${{ job.status }} == 'failure' ]; then
-            ::set-output name=line_color::ff0800
-          else
-            ::set-output name=line_color::28a745
-          fi
+          echo "LINE_COLOR=ff0800" >> $GITHUB_ENV
+
+      - name: Set Notification Line Color Green
+        if: ${{ job.status }} != 'failure'
+        run: |
+          echo "LINE_COLOR=28a745" >> $GITHUB_ENV
 
       - name: Send Slack notification
         id: slack
@@ -82,7 +82,7 @@ jobs:
               "attachments": [
                 {
                   "pretext": "Test ${{ job.status }}",
-                  "color": "${{ steps.set-color.outputs.line_color }}",
+                  "color": "${{ env.LINE_COLOR }}",
                   "fields": [
                     {
                       "title": "Job has ${{ job.status }}.",
