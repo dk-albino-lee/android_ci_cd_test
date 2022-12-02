@@ -71,7 +71,6 @@ jobs:
       - name: Send Slack notification
         id: slack
         if: always()
-        needs:
         uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: "C04CXA6KPQW"
