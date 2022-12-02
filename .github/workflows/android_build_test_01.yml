@@ -63,7 +63,7 @@ jobs:
         id: set-color
         if: always()
         run: |
-          if [ ${{ failure() }} ]; then
+          if [ ${{ job.status }} == 'failure' ]; then
             ::set-output name=line_color::ff0000
           else
             ::set-output name=line_color::28a745
