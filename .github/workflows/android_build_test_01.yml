@@ -77,7 +77,7 @@ jobs:
                     {
                       "title": "Status",
                       "short": true,
-                      "value": "${{ github.job }} in workflow ${{ gㅑthub.workflow }} of ${{ github.repository }} ahs ${{ job.status }}."
+                      "value": "${{ github.job }} in workflow ${{ github.workflow }} of ${{ github.repository }} ahs ${{ job.status }}."
                     }
                   ]
                 }
