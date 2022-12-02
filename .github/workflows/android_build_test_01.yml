@@ -67,6 +67,7 @@ jobs:
             ::set-output name=line_color::ff0800
           else
             ::set-output name=line_color::28a745
+          fi
 
       - name: Send Slack notification
         id: slack
