@@ -70,7 +70,7 @@ jobs:
 
       # CHECK ERROR
       - name: Check If Grand Gradlew Permission Failed
-        if: failure() && steps.grand_gradlew_permission.outcome == failure
+        if: ${{ failure() }} && steps.grand_gradlew_permission.outcome == failure
         run: |
           echo "FAILED_STEP=Grand Gradlew Permission" >> $GITHUB_ENV
 
