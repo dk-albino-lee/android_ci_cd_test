@@ -68,16 +68,16 @@ jobs:
           update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
-              "text": "Status: DONE",
+              "text": "${{ github.job }} Status: ${{ job.status }}",
               "attachments": [
                 {
-                  "pretext": "Test DONE",
+                  "pretext": "Test ${{ job.status }}",
                   "color": "28a745",
                   "fields": [
                     {
                       "title": "Status",
                       "short": true,
-                      "value": "DONE"
+                      "value": "${{ github.job }} in workflow ${{ gkthub.workflow }} of ${{ github.repository }} ahs ${{ job.status }}."
                     }
                   ]
                 }
