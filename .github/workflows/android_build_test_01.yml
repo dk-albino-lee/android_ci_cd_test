@@ -70,37 +70,37 @@ jobs:
 
       # CHECK ERROR
       - name: Check If Grand Gradlew Permission Failed
-        if: ${{ failure() }} && steps.grand_gradlew_permission.conclusion == 'failure'
+        if: ${{ failure() && steps.grand_gradlew_permission.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Grand Gradlew Permission" >> $GITHUB_ENV
 
       - name: Check If Validate Gradlew Failed
-        if: ${{ failure() }} && steps.validate_gradlew.conclusion == 'failure'
+        if: ${{ failure() && steps.validate_gradlew.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Validate Gradlew Permission" >> $GITHUB_ENV
 
       - name: Check If Set Up Gradle Failed
-        if: ${{ failure() }} && steps.setup_gradle.conclusion == 'failure'
+        if: ${{ failure() && steps.setup_gradle.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Set Up Gradle" >> $GITHUB_ENV
 
       - name: Check If Build with Gradle Failed
-        if: ${{ failure() }} && steps.build_with_gradle.conclusion == 'failure'
+        if: ${{ failure() && steps.build_with_gradle.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Build with Gradle" >> $GITHUB_ENV
 
       - name: Check If Lint Failed
-        if: ${{ failure() }} && steps.lint.conclusion == 'failure'
+        if: ${{ failure() && steps.lint.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Lint" >> $GITHUB_ENV 
 
       - name: Check If Unit Test Failed
-        if: ${{ failure() }} && steps.unit_test.conclusion == 'failure'
+        if: ${{ failure() && steps.unit_test.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Unit Test" >> $GITHUB_ENV 
 
       - name: Check If Build debug APK Failed
-        if: ${{ failure() }} && steps.build_debug_apk.conclusion == 'failure'
+        if: ${{ failure() && steps.build_debug_apk.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Build debug APK" >> $GITHUB_ENV
 
