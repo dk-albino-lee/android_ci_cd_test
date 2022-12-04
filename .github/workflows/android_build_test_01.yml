@@ -83,11 +83,11 @@ jobs:
       # 테스트니까 메인 브랜치로
       - name: Build debug APK
         id: build_debug_apk
-        if: ${{ github.ref == 'refs/heads/main' }}
+#        if: ${{ github.ref == 'refs/heads/main' }}
         run: ./gradlew assembleDebug
 
       # AppTester 배포 루틴 추가 필요
-      # app/build/outputs/apk/dev/debug/app-dev-debug.apk
+      # app/build/outputs/apk/debug/app-debug.apk
 
       # REPORT
 
