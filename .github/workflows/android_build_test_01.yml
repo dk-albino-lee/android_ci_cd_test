@@ -63,9 +63,9 @@ jobs:
         id: setup_gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Build with Gradle
-        id: build_with_gradle
-        run: ./gradlew build
+#      - name: Build with Gradle
+#        id: build_with_gradle
+#        run: ./gradlew build
 
       - name: Lint
         id: lint
