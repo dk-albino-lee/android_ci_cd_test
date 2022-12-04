@@ -54,9 +54,13 @@ jobs:
         id: lint
         run: ./gradlew ktlintCheck
 
+      - name: Instrumented Test
+        id: instrumented_test
+        run: ./gradlew connectedExampleInstrumentedTestAndroidTest
+
       - name: Unit Test
         id: unit_test
-        run: ./gradlew test ExampleUnitTest
+        run: ./gradlew testExampleUnitTestUnitTest
 
       - name: Build debug APK
         id: build_debug_apk
@@ -93,6 +97,11 @@ jobs:
         if: ${{ failure() && steps.lint.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=Lint" >> $GITHUB_ENV 
+
+      - name: Check If Instrumented Test Failed
+        if: ${{ failure() && steps.instrumented_test.conclusion == 'failure' }}
+        run: |
+          echo "FAILED_STEP=Instrumented Test" >> $GITHUB_ENV 
 
       - name: Check If Unit Test Failed
         if: ${{ failure() && steps.unit_test.conclusion == 'failure' }}
