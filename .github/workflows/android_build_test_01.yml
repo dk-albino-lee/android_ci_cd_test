@@ -56,7 +56,7 @@ jobs:
 
       - name: Unit Test
         id: unit_test
-        run: ./gradlew test --tests ExampleUnitTest
+        run: ./gradlew test ExampleUnitTest
 
       - name: Build debug APK
         id: build_debug_apk
