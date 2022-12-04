@@ -95,42 +95,42 @@ jobs:
       - name: Check If Grand Gradlew Permission Failed
         if: ${{ failure() && steps.grand_gradlew_permission.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Grand Gradlew Permission" >> $GITHUB_ENV
+          echo "FAILED_STEP=on step Grand Gradlew Permission" >> $GITHUB_ENV
 
       - name: Check If Validate Gradlew Failed
         if: ${{ failure() && steps.validate_gradlew.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Validate Gradlew Permission" >> $GITHUB_ENV
+          echo "FAILED_STEP=on step Validate Gradlew Permission" >> $GITHUB_ENV
 
       - name: Check If Set Up Gradle Failed
         if: ${{ failure() && steps.setup_gradle.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Set Up Gradle" >> $GITHUB_ENV
+          echo "FAILED_STEP=on step Set Up Gradle" >> $GITHUB_ENV
 
       - name: Check If Build with Gradle Failed
         if: ${{ failure() && steps.build_with_gradle.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Build with Gradle" >> $GITHUB_ENV
+          echo "FAILED_STEP=on step Build with Gradle" >> $GITHUB_ENV
 
       - name: Check If Lint Failed
         if: ${{ failure() && steps.lint.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Lint" >> $GITHUB_ENV 
+          echo "FAILED_STEP=on step Lint" >> $GITHUB_ENV 
 
       - name: Check If Instrumented Test Failed
         if: ${{ failure() && steps.instrumented_test.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Instrumented Test" >> $GITHUB_ENV 
+          echo "FAILED_STEP=on step Instrumented Test" >> $GITHUB_ENV 
 
       - name: Check If Unit Test Failed
         if: ${{ failure() && steps.unit_test.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Unit Test" >> $GITHUB_ENV 
+          echo "FAILED_STEP=on step Unit Test" >> $GITHUB_ENV 
 
       - name: Check If Build debug APK Failed
         if: ${{ failure() && steps.build_debug_apk.conclusion == 'failure' }}
         run: |
-          echo "FAILED_STEP=Build debug APK" >> $GITHUB_ENV
+          echo "FAILED_STEP=on step Build debug APK" >> $GITHUB_ENV
 
       - name: Set Notification Line Color Red
         if: ${{ failure() }}
@@ -159,7 +159,7 @@ jobs:
                     {
                       "title": "Status: ${{ job.status }}",
                       "short": true,
-                      "value": "${{ github.job }} in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} on step ${{ env.FAILED_STEP }}."
+                      "value": "${{ github.job }} in workflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }} ${{ env.FAILED_STEP }}."
                     }
                   ]
                 }
