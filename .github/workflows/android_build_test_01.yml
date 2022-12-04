@@ -54,9 +54,10 @@ jobs:
         id: lint
         run: ./gradlew ktlintCheck
 
-      - name: Instrumented Test
-        id: instrumented_test
-        run: ./gradlew connectedAndroidTest
+      # 연결된 기기가 있을 경우
+#      - name: Instrumented Test
+#        id: instrumented_test
+#        run: ./gradlew connectedAndroidTest
 
       - name: Unit Test
         id: unit_test
