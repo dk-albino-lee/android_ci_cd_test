@@ -56,11 +56,11 @@ jobs:
 
       - name: Instrumented Test
         id: instrumented_test
-        run: ./gradlew connectedExampleInstrumentedTestAndroidTest
+        run: ./gradlew connectedAndroidTest
 
       - name: Unit Test
         id: unit_test
-        run: ./gradlew testExampleUnitTestUnitTest
+        run: ./gradlew test
 
       - name: Build debug APK
         id: build_debug_apk
