@@ -31,10 +31,12 @@ android {
         debug {
             debuggable true
             shrinkResources false
+            zipAlignEnabled true
             buildConfigField("boolean", "IS_DEBUG", "true")
         }
         release {
             minifyEnabled false
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("boolean", "IS_RELEASE", "true")
         }
