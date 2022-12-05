@@ -81,12 +81,14 @@ jobs:
         run: ./gradlew test
 
       # 테스트니까 메인 브랜치로
+      # 실제로는 아마 main 에 머지할 때는 release , staging 은 stage , dev 는 debug
       - name: Build debug APK
         id: build_debug_apk
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: bash ./gradlew assembleDebug --stacktrace
+        run: bash ./gradlew assembleRelease --stacktrace
 
       # AppTester 배포 루틴 추가 필요
+      # unofficial plugin 쓰기 싫은데. 방법 없을까?
       # app/build/outputs/apk/debug/app-debug.apk
 
       # REPORT
