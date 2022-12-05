@@ -80,6 +80,9 @@ jobs:
         id: unit_test
         run: ./gradlew test
 
+      - name: Clean Gradle
+        run: ./gradlew clean
+
       # 테스트니까 메인 브랜치로
       # 실제로는 아마 main 에 머지할 때는 release , staging 은 stage , dev 는 debug
       - name: Build debug APK
