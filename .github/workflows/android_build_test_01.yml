@@ -88,7 +88,7 @@ jobs:
       - name: Build debug APK
         id: build_debug_apk
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew installDebug --stacktrace
 
       # AppTester 배포 루틴 추가 필요
       # unofficial plugin 쓰기 싫은데. 방법 없을까?
