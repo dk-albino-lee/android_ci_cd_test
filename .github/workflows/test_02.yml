@@ -70,12 +70,12 @@ jobs:
 
       - name: Build
         id: build_gradle
-        run: cd android && ./gradlew build
+        run: ./gradlew build
 
       - name: Build debug APK
         id: build_debug_apk
 #        if: ${{ github.ref == 'refs/heads/debug' || github.ref == 'refs/heads/staging' }}
-        run: ./gradlew clean assembleDebug --stacktrace
+        run: ./gradlew app:assembleDebug --stacktrace
 
 #      - name: Build release AAB
 #        id: build_release_aab
