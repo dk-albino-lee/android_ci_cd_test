@@ -58,6 +58,10 @@ jobs:
         id: set_up_gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Build
+        id: build_gradle
+        uses: ./gradlew build
+
   test:
     runs-on: ubuntu-latest
     if: ${{ contains(needs.setup.result, 'success') }}
@@ -65,7 +69,7 @@ jobs:
     steps:
       - name: Test
         id: unit_test
-        run: ./gradlew build
+        run: ./gradlew test
 
   build:
     runs-on: ubuntu-latest
