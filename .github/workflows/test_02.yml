@@ -60,7 +60,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    if: ${{ contains(join(needs.setup.result, ','), 'success' }}
+    if: ${{ contains(join(needs.setup.result, 'sucess') }}
     needs: setup
     steps:
       - name: Test
