@@ -72,20 +72,6 @@ jobs:
         id: build_gradle
         run: ./gradlew build
 
-  test:
-    runs-on: ubuntu-latest
-    if: ${{ contains(needs.setup.result, 'success') }}
-    needs: setup
-    steps:
-      - name: Test
-        id: unit_test
-        run: ./gradlew test
-
-  build:
-    runs-on: ubuntu-latest
-    if: ${{ contains(join(needs.*.result, ','), 'success') }}
-    needs: [setup, test]
-    steps:
       - name: Build debug APK
         id: build_debug_apk
         if: ${{ github.ref == 'refs/heads/debug' || github.ref == 'refs/heads/staging' }}
@@ -111,21 +97,6 @@ jobs:
         run: |
           echo "FAILED_STEP=on step Check PR Title" >> $GITHUB_ENV
 
-  testerror:
-    runs-on: ubuntu-latest
-    if: ${{ always() && needs.test.result == 'failure' }}
-    needs: test
-    steps:
-      - name: Check If Test Failed
-        if: ${{ always() && needs.test.unit_test.conclusion == 'failure' }}
-        run: |
-          echo "FAILED_STEP=on step Test" >> $GITHUB_ENV
-
-  builderror:
-    runs-on: ubuntu-latest
-    if: ${{ always() && needs.build.result == 'failure' }}
-    needs: build
-    steps:
       - name: Build Debug APK Failed
         if: ${{ always() && needs.build.build_debug_apk.conclusion == 'failure' }}
         run: |
@@ -139,7 +110,7 @@ jobs:
   sendfailnoti:
     runs-on: ubuntu-latest
     if: ${{ failure() }}
-    needs: [setup, test, build, setuperror, testerror, builderror]
+    needs: [setup, setuperror]
     steps:
       - name: Set Failed Color
         run: |
@@ -172,7 +143,7 @@ jobs:
   sendsuccessnoti:
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [setup, test, build, setuperror, testerror, builderror]
+    needs: [setup, setuperror]
     steps:
       - name: Set Success Color
         run: |
