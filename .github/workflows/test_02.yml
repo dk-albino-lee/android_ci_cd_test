@@ -3,20 +3,14 @@ name: Android CI Test
 on:
   pull_request:
     branches:
-      - '**'
+      - main
+      - release
+      - dev
+      - staging
   push:
     branches:
-      - '**'
-#  pull_request:
-#    branches:
-#      - main
-#      - release
-#      - dev
-#      - staging
-#  push:
-#    branches:
-#      - main
-#      - release
+      - main
+      - release
 
 jobs:
   setup:
@@ -52,6 +46,16 @@ jobs:
       - name: Set Android SDK
         uses: android-actions/setup-android@v2
 
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Grand Gradlew Permission
         id: grand_gradlew_permission
         run: chmod +x gradlew
@@ -66,7 +70,7 @@ jobs:
 
       - name: Build
         id: build_gradle
-        uses: ./gradlew build
+        run: ./gradlew build
 
   test:
     runs-on: ubuntu-latest
