@@ -8,8 +8,9 @@ on:
       - dev
       - staging
   push:
-    - main
-    - release
+    branches:
+      - main
+      - release
 
 jobs:
   setup:
