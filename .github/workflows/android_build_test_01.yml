@@ -63,25 +63,25 @@ jobs:
         id: setup_gradle
         uses: gradle/gradle-build-action@v2
 
-#      - name: Build with Gradle
-#        id: build_with_gradle
-#        run: ./gradlew build
+      - name: Build with Gradle
+        id: build_with_gradle
+        run: ./gradlew build
 
-      - name: Lint
-        id: lint
-        run: ./gradlew ktlintCheck
+#      - name: Lint
+#        id: lint
+#        run: ./gradlew ktlintCheck
 
       # 연결된 기기가 있을 경우
 #      - name: Instrumented Test
 #        id: instrumented_test
 #        run: ./gradlew connectedAndroidTest
 
-      - name: Unit Test
-        id: unit_test
-        run: ./gradlew test
+#      - name: Unit Test
+#        id: unit_test
+#        run: ./gradlew test
 
-      - name: Clean Gradle
-        run: ./gradlew clean
+#      - name: Clean Gradle
+#        run: ./gradlew clean
 
       # 테스트니까 메인 브랜치로
       # 실제로는 아마 main 에 머지할 때는 release , staging 은 stage , dev 는 debug
