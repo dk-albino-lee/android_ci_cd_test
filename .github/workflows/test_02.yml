@@ -3,14 +3,20 @@ name: Android CI Test
 on:
   pull_request:
     branches:
-      - main
-      - release
-      - dev
-      - staging
+      - '**'
   push:
     branches:
-      - main
-      - release
+      - '**'
+#  pull_request:
+#    branches:
+#      - main
+#      - release
+#      - dev
+#      - staging
+#  push:
+#    branches:
+#      - main
+#      - release
 
 jobs:
   setup:
