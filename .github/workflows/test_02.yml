@@ -7,9 +7,9 @@ on:
       - release
       - dev
       - staging
-    push:
-      - main
-      - release
+  push:
+    - main
+    - release
 
 jobs:
   setup:
