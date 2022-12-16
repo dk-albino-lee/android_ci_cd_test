@@ -75,7 +75,7 @@ jobs:
       - name: Build debug APK
         id: build_debug_apk
 #        if: ${{ github.ref == 'refs/heads/debug' || github.ref == 'refs/heads/staging' }}
-        run: ./gradlew app:assembleDebug --stacktrace
+        run: bash ./gradlew app:assembleDebug --stacktrace
 
 #      - name: Build release AAB
 #        id: build_release_aab
