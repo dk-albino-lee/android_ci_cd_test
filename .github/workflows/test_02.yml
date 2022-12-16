@@ -58,7 +58,7 @@ jobs:
 
       - name: Grand Gradlew Permission
         id: grand_gradlew_permission
-        run: chmod +x ./gradlew
+        run: chmod +x gradlew
 
       - name: Validate Gradlew
         id: validate_gradlew
@@ -70,7 +70,7 @@ jobs:
 
       - name: Build
         id: build_gradle
-        run: ./gradlew build
+        run: ./android_ci_cd_test/gradlew build
 
       - name: Build debug APK
         id: build_debug_apk
