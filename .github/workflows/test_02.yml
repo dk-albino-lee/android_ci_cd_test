@@ -58,7 +58,7 @@ jobs:
 
       - name: Grand Gradlew Permission
         id: grand_gradlew_permission
-        run: chmod +x gradlew
+        run: chmod +x ./gradlew
 
       - name: Validate Gradlew
         id: validate_gradlew
@@ -74,13 +74,13 @@ jobs:
 
       - name: Build debug APK
         id: build_debug_apk
-        if: ${{ github.ref == 'refs/heads/debug' || github.ref == 'refs/heads/staging' }}
-        run: ./gradlew assembleDebug --stacktrace
+#        if: ${{ github.ref == 'refs/heads/debug' || github.ref == 'refs/heads/staging' }}
+        run: ./gradlew clean assembleDebug --stacktrace
 
-      - name: Build release AAB
-        id: build_release_aab
-        if: ${{ github.ref == 'refs/heads/release' || github.ref == 'refs/heads/main' }}\
-        run: ./gradlew bundleRelease
+#      - name: Build release AAB
+#        id: build_release_aab
+#        if: ${{ github.ref == 'refs/heads/release' || github.ref == 'refs/heads/main' }}
+#        run: ./gradlew clean bundleRelease
 
   setuperror:
     runs-on: ubuntu-latest
