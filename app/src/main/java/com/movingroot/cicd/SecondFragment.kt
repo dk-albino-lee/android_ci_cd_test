@@ -1,6 +1,7 @@
 package com.movingroot.cicd
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,7 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSecond.setOnClickListener {
+            Log.d("dddd", "dddd")
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }
