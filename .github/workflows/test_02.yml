@@ -1,0 +1,188 @@
+name: Android CI Test
+
+on:
+  pull_request:
+    branches:
+      - main
+      - release
+      - dev
+      - staging
+    push:
+      - main
+      - release
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Up java
+        id: set_up_java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 1.8
+
+      - name: Check PR Title
+        if: ${{ github.event.pull_request }}
+        id: check_pr_title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [[ "$TITLE" =~ ^SWIT- ]]; then
+            echo "PR title valid"
+          else
+            echo "PR title invalid"
+            exit 1
+            fi
+
+      - name: Get PR Issue Number
+        if: ${{ github.event.issue.pull_request }}
+        run: |
+          echo "ISSUE_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_ENV
+
+      - name: Set Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Grand Gradlew Permission
+        id: grand_gradlew_permission
+        run: chmod +x gradlew
+
+      - name: Validate Gradlew
+        id: validate_gradlew
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Set Up Gradle
+        id: set_up_gradle
+        uses: gradle/gradle-build-action@v2
+
+  test:
+    runs-on: ubuntu-latest
+    if: ${{ contains(join(needs.setup.result, ','), 'success' }}
+    needs: setup
+    steps:
+      - name: Test
+        id: unit_test
+        run: ./gradlew test
+
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ contains(join(needs.*.result, ','), 'success') }}
+    needs: [setup, test]
+    steps:
+      - name: Build debug APK
+        id: build_debug_apk
+        if: ${{ github.ref == 'refs/heads/debug' || github.ref == 'refs/heads/staging' }}
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Build release AAB
+        id: build_release_aab
+        if: ${{ github.ref == 'refs/heads/release' || github.ref == 'refs/heads/main' }}\
+        run: ./gradlew bundleRelease
+
+  setuperror:
+    runs-on: ubuntu-latest
+    if: ${{ always() && needs.setup.result == 'failure' }}
+    needs: setup
+    steps:
+      - name: Check If Set Up Java Failed
+        if: ${{ always() && needs.setup.set_up_java.conclusion == 'failure' }}
+        run: |
+          echo "FAILED_STEP=on step Set Up Java" >> $GITHUB_ENV
+
+      - name: Check If PR Title Invalid
+        if: ${{ always() && needs.setup.check_pr_title.conclusion == 'failure' }}
+        run: |
+          echo "FAILED_STEP=on step Check PR Title" >> $GITHUB_ENV
+
+  testerror:
+    runs-on: ubuntu-latest
+    if: ${{ always() && needs.test.result == 'failure' }}
+    needs: test
+    steps:
+      - name: Check If Test Failed
+        if: ${{ always() && needs.test.unit_test.conclusion == 'failure' }}
+        run: |
+          echo "FAILED_STEP=on step Test" >> $GITHUB_ENV
+
+  builderror:
+    runs-on: ubuntu-latest
+    if: ${{ always() && needs.build.result == 'failure' }}
+    needs: build
+    steps:
+      - name: Build Debug APK Failed
+        if: ${{ always() && needs.build.build_debug_apk.conclusion == 'failure' }}
+        run: |
+          echo "FAILED_STEP=on step Build Debug Apk" >> $GITHUB_ENV
+
+      - name: Build Release Aab Failed
+        if: ${{ always() && needs.build.build_release_aab.conclusion == 'failure' }}
+        run: |
+          echo "FAILED_STEP=on step Build Release AAB" >> $GITHUB_ENV
+
+  sendfailnoti:
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    needs: [setup, test, build, setuperror, testerror, builderror]
+    steps:
+      - name: Set Failed Color
+        run: |
+          echo "LINE_COLOR=ff0800" >> $GITHUB_ENV
+
+      - name: Send Failed Slack Notification
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: "C04CXA6KPQW"
+          update-ts: ${{ steps.slack.outputs.ts }}
+          payload: |
+            {
+              "text": "${{ github.event_name }} has failed",
+              "attachments": [
+                {
+                  "color": "${{ env.LINE_COLOR }}",
+                  "fields": [
+                    {
+                      "title": "Status: FAILED",
+                      "short": true,
+                      "value": "Workflow ${{ github.workflow }} of ${{ github.repository }} has failed: ${{ env.FAILED_STEP }}."
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP }}
+
+  sendsuccessnoti:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [setup, test, build, setuperror, testerror, builderror]
+    steps:
+      - name: Set Success Color
+        run: |
+          echo "LINE_COLOR=28a745" >> $GITHUB_ENV
+
+      - name: Send Failed Slack Notification
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: "C04CXA6KPQW"
+          update-ts: ${{ steps.slack.outputs.ts }}
+          payload: |
+            {
+              "text": "${{ github.event_name }} has succeeded",
+              "attachments": [
+                {
+                  "color": "${{ env.LINE_COLOR }}",
+                  "fields": [
+                    {
+                      "title": "Status: SUCCESS",
+                      "short": true,
+                      "value": "Workflow ${{ github.workflow }} of ${{ github.repository }} has failed: ${{ env.FAILED_STEP }}."
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP }}
+
