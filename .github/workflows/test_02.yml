@@ -58,20 +58,19 @@ jobs:
         id: set_up_gradle
         uses: gradle/gradle-build-action@v2
 
-#  test:
-#    runs-on: ubuntu-latest
-#    if: ${{ contains(needs.setup.result, 'success') }}
-#    needs: setup
-#    steps:
-#      - name: Test
-#        id: unit_test
-#        run: ./gradlew test
+  test:
+    runs-on: ubuntu-latest
+    if: ${{ contains(needs.setup.result, 'success') }}
+    needs: setup
+    steps:
+      - name: Test
+        id: unit_test
+        run: ./gradlew build
 
   build:
     runs-on: ubuntu-latest
     if: ${{ contains(join(needs.*.result, ','), 'success') }}
-#    needs: [setup, test]
-    needs: setup
+    needs: [setup, test]
     steps:
       - name: Build debug APK
         id: build_debug_apk
