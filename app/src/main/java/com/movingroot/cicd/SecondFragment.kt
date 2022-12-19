@@ -24,7 +24,7 @@ class SecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("Hello", "World 2")
+        Log.d("Hello", "World 3")
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
         return binding.root
 
