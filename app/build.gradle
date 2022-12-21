@@ -23,7 +23,7 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".dev"
+//            applicationIdSuffix ".dev"
             debuggable true
             shrinkResources false
         }
