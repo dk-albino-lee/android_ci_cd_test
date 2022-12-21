@@ -77,6 +77,15 @@ jobs:
 #        if: ${{ github.ref == 'refs/heads/debug' || github.ref == 'refs/heads/staging' }}
         run: ./gradlew app:assembleDebug --stacktrace
 
+      - name: Upload Debug Build to Firebase App Distribution
+        id: upload_debug_build
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.APP_KEY }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups:
+          file: app/build/outputs/apk/debug/app-debug.apk
+
 #      - name: Build release AAB
 #        id: build_release_aab
 #        if: ${{ github.ref == 'refs/heads/release' || github.ref == 'refs/heads/main' }}
@@ -101,6 +110,11 @@ jobs:
         if: ${{ always() && needs.build.build_debug_apk.conclusion == 'failure' }}
         run: |
           echo "FAILED_STEP=on step Build Debug Apk" >> $GITHUB_ENV
+
+      - name: Upload Debug Build to Firebase App Distribution Failed
+        if: ${{ always() && needs.setup.upload_debug_build.conclusion == 'failure' }}
+        run: |
+          echo "FAILED_STEP=on step Upload Debug Build to Firebase App Distribution" >> $GITHUB_ENV
 
       - name: Build Release Aab Failed
         if: ${{ always() && needs.build.build_release_aab.conclusion == 'failure' }}
@@ -164,7 +178,7 @@ jobs:
                     {
                       "title": "Status: SUCCESS",
                       "short": true,
-                      "value": "Workflow ${{ github.workflow }} of ${{ github.repository }} has failed: ${{ env.FAILED_STEP }}."
+                      "value": "Workflow ${{ github.workflow }} of ${{ github.repository }} has succeeded."
                     }
                   ]
                 }

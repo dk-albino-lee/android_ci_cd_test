@@ -14,13 +14,23 @@ android {
         versionCode 1
         versionName "1.0.1"
 
+//        setProperty("archivesBaseName", "MovingRoot_" + versionName + "(" + versionCode + ")_" + new Date().format('yyyyMMdd_HHmm'))
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".dev"
+            debuggable true
+            shrinkResources false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            shrinkResources false
         }
     }
     compileOptions {
