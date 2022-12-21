@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "750971280610",
+    "project_id": "ci-cd-test-82b7a",
+    "storage_bucket": "ci-cd-test-82b7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750971280610:android:cbd7b485727ab33d9c92bb",
+        "android_client_info": {
+          "package_name": "com.movingroot.cicd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "750971280610-g2sqvqa96einimu3c4ujo92uh1kq0a7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.movingroot.cicd",
+            "certificate_hash": "5da8888d1a5b2df365bc6fa7e5cdbbdd1ae8dabb"
+          }
+        },
+        {
+          "client_id": "750971280610-l0ecgfkc2m0cckjm22ubnn82du5jc4vf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI9elNtBQnCxQBW4TEs7YmUZM0GYQEZLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "750971280610-l0ecgfkc2m0cckjm22ubnn82du5jc4vf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
